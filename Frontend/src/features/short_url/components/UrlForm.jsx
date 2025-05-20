@@ -18,7 +18,7 @@ const UrlForm = () => {
     try{
       const shortUrl = await createShortUrl(url,customSlug)
       console.log(shortUrl)
-      setShortUrl(`${API_URL}/${shortUrl}`)
+      setShortUrl(`${API_URL}${shortUrl}`)
       queryClient.invalidateQueries({queryKey: ['userUrls']})
       setError(null)
     }catch(err){

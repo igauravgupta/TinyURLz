@@ -3,6 +3,7 @@ import { createShortUrl } from '../services/short_url.api.js'
 import { useSelector } from 'react-redux'
 import { QueryClient } from '@tanstack/react-query'
 import { queryClient } from '../../../main'
+import { API_URL } from '../../../constants/constants.js'
 
 const UrlForm = () => {
   
@@ -16,7 +17,8 @@ const UrlForm = () => {
   const handleSubmit = async () => {
     try{
       const shortUrl = await createShortUrl(url,customSlug)
-      setShortUrl(shortUrl)
+      console.log(shortUrl)
+      setShortUrl(`${API_URL}/${shortUrl}`)
       queryClient.invalidateQueries({queryKey: ['userUrls']})
       setError(null)
     }catch(err){

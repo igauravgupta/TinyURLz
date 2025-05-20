@@ -53,17 +53,8 @@ app.use("/api/v1", limiter);
 
 // Importing routes
 
-import authRoutes from "./src/modules/auth/auth.routes.js";
-import userRoutes from "./src/modules/user/user.routes.js";
-import short_urlRoutes from "./src/modules/shortUrl/short_url.routes.js";
-import {redirectFromShortUrl} from "./src/modules/shortUrl/short_url.controllers.js";
-app.use("/api/user",userRoutes)
-app.use("/api/auth",authRoutes)
-app.use("/api/create",short_urlRoutes)
-app.get("/:id",redirectFromShortUrl)
-
-app.get("/ping", (req, res) => res.send("pong"));
-
+import router from "./routes.js";
+app.use(router);
 
 
 // handling 404-notFound error

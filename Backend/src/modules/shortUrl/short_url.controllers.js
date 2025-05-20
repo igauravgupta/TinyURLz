@@ -1,6 +1,6 @@
-import { getShortUrl } from "../../dao/short_url.js"
+import { getShortUrl } from "./short_url.dao.js"
 import { createShortUrlWithoutUser, createShortUrlWithUser } from "./short_url.service.js"
-import {asyncHandler} from "../../utils/asyncHandler.js"
+import {asyncHandler} from "../../utils/asyncHandler.utils.js"
 
 export const createShortUrl = asyncHandler(async (req,res)=>{
     const data = req.body

@@ -7,7 +7,7 @@ export class APIError extends Error {
   }
 }
 
-export class ConflictError extends AppError {
+export class ConflictError extends APIError {
     constructor(message = "Conflict occurred") {
       super(message, 409);
     }

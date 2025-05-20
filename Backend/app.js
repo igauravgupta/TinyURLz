@@ -18,6 +18,8 @@ import {morganMiddleware} from "./src/middlewares/logger.middleware.js";
 const app = express();
 dotenv.config();
 
+
+
 // Body Parser Middleware
 app.use(express.json({limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb"  }));
@@ -43,26 +45,31 @@ app.use(hpp());
 
 // loogging middleware
 if (process.env.NODE_ENV === "development") {
-  app.use(morganMiddleware);
+  app.use(morganMiddleware());
 }
-
 
 // Apply rate limiting to all routes
 app.use("/api/v1", limiter);
 
 // Importing routes
-import authRoutes from "./src/auth/routes/auth.routes.js";
-import userRoutes from "./src/user/routes/user.routes.js";
-import short_urlRoutes from "./src/shortUrl/routes/shortUrl.routes.js";
-import {redirectFromShortUrl} from "./src/shortUrl/controllers/shortUrl.controller.js";
+
+import authRoutes from "./src/modules/auth/auth.routes.js";
+import userRoutes from "./src/modules/user/user.routes.js";
+import short_urlRoutes from "./src/modules/shortUrl/short_url.routes.js";
+import {redirectFromShortUrl} from "./src/modules/shortUrl/short_url.controllers.js";
 app.use("/api/user",userRoutes)
 app.use("/api/auth",authRoutes)
 app.use("/api/create",short_urlRoutes)
 app.get("/:id",redirectFromShortUrl)
 
+app.get("/ping", (req, res) => res.send("pong"));
+
+
+
 // handling 404-notFound error
 app.use(notFoundHandler);
 app.use(errorHandler);
+
 
 
 app.listen(process.env.PORT, () => {

@@ -1,6 +1,6 @@
-import { cookieOptions } from "../../config/cookieOptions.js"
-import { loginUser, registerUser } from "./auth.service.js"
-import {asyncHandler} from "../../utils/asyncHandler.js"
+import { cookieOptions } from "../../config/cookies.config.js"
+import { loginUser, registerUser } from "./auth.services.js"
+import {asyncHandler} from "../../utils/asyncHandler.utils.js"
 
 
 export const register_user =asyncHandler( async (req, res) => {

@@ -1,4 +1,4 @@
-import {asyncHandler} from "../../utils/asyncHandler.js"
+import {asyncHandler} from "../../utils/asyncHandler.utils.js"
 import { getAllUserUrlsDao } from "../auth/auth.dao.js"
 
 export const getAllUserUrls = asyncHandler(async (req, res) => {

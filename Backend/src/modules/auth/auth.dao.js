@@ -19,6 +19,6 @@ export const createUser = async (name, email, password) => {
     return newUser
 }
 
-export const getAllUserUrls = async (id) => {
+export const getAllUserUrlsDao = async (id) => {
     return await UrlModel.find({user:id})
 }

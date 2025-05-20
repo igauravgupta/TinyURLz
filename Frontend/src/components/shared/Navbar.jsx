@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../store/slice/authSlice';
+import { logout } from '../../store/slice/AuthSlice.js';
 import { logoutUser } from '../../features/auth/services/auth.api';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

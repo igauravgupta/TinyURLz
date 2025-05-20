@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { registerUser } from '../services/auth.api';
 import { useDispatch } from 'react-redux';
-import { login } from '../../../store/slice/authSlice';
+import { login } from '../../../store/slice/AuthSlice.js';
 import { useNavigate } from 'react-router';
 
 const RegisterForm = ({state}) => {

@@ -5,15 +5,13 @@ import {asyncHandler} from "../../utils/asyncHandler.utils.js"
 export const createShortUrl = asyncHandler(async (req,res)=>{
     const data = req.body
     let shortUrl
-    console.log("Data",data)
-    console.log("User",req.user)
     if(req.user){
         console.log("User ID",req.user._id)
         shortUrl = await createShortUrlWithUser(data.url,req.user._id,data.slug)
     }else{  
         shortUrl = await createShortUrlWithoutUser(data.url)
     }
-    res.status(200).json({shortUrl : process.env.APP_URL + shortUrl})
+    res.status(200).json({shortUrl : shortUrl})
 })
 
 
@@ -27,7 +25,8 @@ export const redirectFromShortUrl = asyncHandler(async (req,res)=>{
 export const createCustomShortUrl = asyncHandler(async (req,res)=>{
     const {url,slug} = req.body
     const shortUrl = await createShortUrlWithoutUser(url,customUrl)
-    res.status(200).json({shortUrl : process.env.APP_URL + shortUrl})
+    console.log("Short URL",shortUrl)
+    res.status(200).json({shortUrl : shortUrl})
 })
 
 export const deleteShortUrl = asyncHandler(async (req,res)=>{

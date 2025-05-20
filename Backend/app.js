@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import connectDB from "./src/config/db.config.js";
 import cors from "cors";
 import helmet from "helmet";
-import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import hpp from "hpp";
 import mongoSanitize from "express-mongo-sanitize";
@@ -44,15 +43,22 @@ app.use(hpp());
 
 // loogging middleware
 if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
-}
-else {
   app.use(morganMiddleware);
 }
 
 
 // Apply rate limiting to all routes
 app.use("/api/v1", limiter);
+
+// Importing routes
+import authRoutes from "./src/auth/routes/auth.routes.js";
+import userRoutes from "./src/user/routes/user.routes.js";
+import short_urlRoutes from "./src/shortUrl/routes/shortUrl.routes.js";
+import {redirectFromShortUrl} from "./src/shortUrl/controllers/shortUrl.controller.js";
+app.use("/api/user",userRoutes)
+app.use("/api/auth",authRoutes)
+app.use("/api/create",short_urlRoutes)
+app.get("/:id",redirectFromShortUrl)
 
 // handling 404-notFound error
 app.use(notFoundHandler);

@@ -1,6 +1,7 @@
 export const cookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "None",
+    httpOnly: true, 
+    sameSite: 'None',
     maxAge: 1000 * 60 * 60, // 5 minutes
 }

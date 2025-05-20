@@ -1,5 +1,5 @@
-import urlSchema from "../models/short_url.model.js";
-import { ConflictError } from "../middlewares/apiError.middleware.js";
+import urlSchema from "../../models/short_url.model.js";
+import { ConflictError } from "../../middlewares/apiError.middleware.js";
 
 export const saveShortUrl = async (shortUrl, longUrl, userId) => {
     try{

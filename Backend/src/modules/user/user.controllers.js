@@ -1,5 +1,5 @@
 import {asyncHandler} from "../../utils/asyncHandler.js"
-import { getAllUserUrlsDao } from "../dao/user.dao.js"
+import { getAllUserUrlsDao } from "../auth/auth.dao.js"
 
 export const getAllUserUrls = asyncHandler(async (req, res) => {
     const {_id} = req.user

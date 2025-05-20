@@ -50,7 +50,7 @@ const logoStyle = {
                 style={logoStyle}
               />
             <Link to="/" className="text-2xl font-bold text-blue-400 ml-2">
-              Trimly
+               TinyURLz
             </Link>
           </div>
 

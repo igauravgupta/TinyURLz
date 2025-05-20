@@ -1,5 +1,5 @@
 import React from 'react';
-import HomePageImage from '../assets/HomePageImage-1.png';
+import HomePageImage from '../assets/HomePageImage.png';
 
 const HomePage = () => {
   return (
@@ -11,7 +11,7 @@ const HomePage = () => {
             Trim Your URLs. <br /> Expand Your Impact.
           </h1>
           <p className="text-lg md:text-xl text-slate-300 mb-8">
-            Turn long links into clean, branded URLs in seconds — with Trimly.
+            Turn long links into clean, branded URLs in seconds — with TinyURLz
           </p>
           <div className="flex flex-wrap gap-4">
             <a

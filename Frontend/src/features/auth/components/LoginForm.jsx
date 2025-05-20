@@ -21,7 +21,7 @@ const LoginForm = ({ state }) => {
         try {
             const data = await loginUser(password, email);
             dispatch(login(data.user))
-            navigate({to:"/dashboard"})
+            navigate("/dashboard")
             setLoading(false);
             console.log("signin success")
         } catch (err) {

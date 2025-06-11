@@ -1,13 +1,13 @@
 
-# 🔗 TnyUrlz
+# 🔗 TinyURLz
 
-**TnyUrlz** is a full-stack URL shortener application that allows users to shorten long URLs into custom or generated short links. It includes authentication, user management, and RESTful APIs built with modern web technologies.
+**TinyURLz** is a powerful and easy-to-use URL shortener designed to turn long, messy links into clean, concise URLs. Whether you're sharing on social media, managing marketing campaigns, or just want a neater way to send links, TinyURLz makes it simple and efficient.
 
 ---
 
 ## 📁 Project Structure
 ```
-TnyUrlz/
+TinyURLz/
 ├── frontend/ # React + Vite frontend
 └── backend/ # Node.js + Express backend
     ├── src/
@@ -54,7 +54,7 @@ TnyUrlz/
     PORT=8000
     NODE_ENV=development
     ORIGIN=http://localhost:3000
-    MONGO_URI=mongodb://localhost:27017/tnyurlz
+    MONGO_URI=mongodb://localhost:27017/TinyURLz
     JWT_SECRET=your_jwt_secret
     JWT_EXPIRATION=1h
     APP_URL=http://localhost:8000/
@@ -85,8 +85,8 @@ TnyUrlz/
 ## 🐳 Docker Setup (Optional)
 1. Build and run backend using Docker:
     ```bash
-    docker build -t tnyurlz-backend .
-    docker run -p 5000:5000 --env-file .env tnyurlz-backend
+    docker build -t TinyURLz-backend .
+    docker run -p 5000:5000 --env-file .env TinyURLz-backend
     ```
 ## 📌 Features
 1. User authentication with JWT
@@ -98,5 +98,5 @@ TnyUrlz/
 
 
 ## 🤝 Contributing
-Want to help improve TnyUrlz? 
+Want to help improve TinyURLz? 
 Feel free to fork, submit issues, or open pull requests!

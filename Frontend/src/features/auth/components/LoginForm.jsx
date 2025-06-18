@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { loginUser } from '../services/auth.api.js';
-import {useDispatch, useSelector} from 'react-redux';
+import { loginUser,googleAuth } from '../services/auth.api.js';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../../store/slice/AuthSlice.js';
 import { useNavigate } from 'react-router';
+import { GoogleLogin } from '@react-oauth/google';
 
 const LoginForm = ({ state }) => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const auth = useSelector((state) => state.auth)
-    console.log(auth)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -20,14 +19,23 @@ const LoginForm = ({ state }) => {
 
         try {
             const data = await loginUser(password, email);
-            dispatch(login(data.user))
-            navigate("/dashboard")
+            dispatch(login(data.user));
+            navigate("/dashboard");
             setLoading(false);
-            console.log("signin success")
         } catch (err) {
             setLoading(false);
             setError(err.message || 'Login failed. Please check your credentials.');
         }
+    };
+
+    const handleGoogleLoginSuccess = async (credentialResponse) => {
+        const data=await googleAuth(credentialResponse.credential);
+        dispatch(login(data.user)); 
+        navigate("/dashboard");
+    };
+
+    const handleGoogleLoginError = () => {
+        setError("Google Sign-In was unsuccessful. Try again.");
     };
 
     return (
@@ -42,9 +50,7 @@ const LoginForm = ({ state }) => {
                 )}
 
                 <div className="mb-4">
-                    <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="email">
-                        Email
-                    </label>
+                    <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="email">Email</label>
                     <input
                         className="shadow appearance-none border border-gray-700 bg-gray-800 rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
                         id="email"
@@ -57,9 +63,7 @@ const LoginForm = ({ state }) => {
                 </div>
 
                 <div className="mb-6">
-                    <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="password">
-                        Password
-                    </label>
+                    <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="password">Password</label>
                     <input
                         className="shadow appearance-none border border-gray-700 bg-gray-800 rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
                         id="password"
@@ -80,6 +84,16 @@ const LoginForm = ({ state }) => {
                     >
                         {loading ? 'Signing in...' : 'Sign In'}
                     </button>
+                </div>
+
+                {/* Google Sign-In */}
+                <div className="text-center mt-4">
+                    <p className="text-gray-400 mb-2">OR</p>
+                    <GoogleLogin
+                        onSuccess={handleGoogleLoginSuccess}
+                        onError={handleGoogleLoginError}
+                        width={300}
+                    />
                 </div>
 
                 <div className="text-center mt-4">

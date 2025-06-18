@@ -25,3 +25,8 @@ export const getAllUserUrls = async () =>{
     const {data} = await axiosInstance.post("/api/user/urls")
     return data
 }
+
+export const googleAuth = async (authToken) => {
+    const {data} = await axiosInstance.post("/api/auth/google-auth",{authToken})
+    return data
+}

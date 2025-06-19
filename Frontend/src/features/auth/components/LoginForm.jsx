@@ -92,7 +92,7 @@ const LoginForm = ({ state }) => {
                     <GoogleLogin
                         onSuccess={handleGoogleLoginSuccess}
                         onError={handleGoogleLoginError}
-                        width={300}
+                        width={380}
                     />
                 </div>
 

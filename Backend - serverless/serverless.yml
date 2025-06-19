@@ -1,0 +1,37 @@
+service: tinyurlz
+
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-south-1
+  stage: dev
+  environment:
+    NODE_ENV: ${env:NODE_ENV}
+    MONGO_URI: ${env:MONGO_URI}
+    ORIGIN: ${env:ORIGIN}
+    JWT_SECRET: ${env:JWT_SECRET}
+    JWT_EXPIRATION: ${env:JWT_EXPIRATION}
+    APP_URL: ${env:APP_URL}
+    GOOGLE_CLIENT_ID: ${env:GOOGLE_CLIENT_ID}
+  timeout: 10
+
+functions:
+  app:
+    handler: handler.handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: any
+          cors: true
+
+plugins:
+  - serverless-offline
+
+package:
+  exclude:
+    - .gitignore
+    - README.md
+    - .env
+  include:
+    - node_modules/**

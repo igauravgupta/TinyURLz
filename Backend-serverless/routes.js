@@ -11,6 +11,9 @@ import {redirectFromShortUrl} from "./src/modules/shortUrl/short_url.controllers
 router.use("/api/user",userRoutes)
 router.use("/api/auth",authRoutes)
 router.use("/api/urls",short_urlRoutes)
+router.get("/api/test",(req,res)=>{
+  res.json({ msg: "All ok!!",received: req.body });
+});
 router.get("/:id",redirectFromShortUrl)
 
 

@@ -5,7 +5,7 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: ap-south-1
-  stage: dev
+  stage: prod
   environment:
     NODE_ENV: ${env:NODE_ENV}
     MONGO_URI: ${env:MONGO_URI}
@@ -23,8 +23,15 @@ functions:
       - http:
           path: /{proxy+}
           method: any
-          cors: true
-
+          cors:
+            origin: ${env:ORIGIN}
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Requested-With
+              - Origin
+              - Accept
+            allowCredentials: true
 plugins:
   - serverless-offline
 

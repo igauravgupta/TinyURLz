@@ -1,4 +1,4 @@
-import { createUser, findUserByEmail, findUserByEmailByPassword } from "../auth/auth.dao.js"
+import { createUser, findUserByEmail, findUserByEmailByPassword } from "./auth.dao.js"
 import { ConflictError } from "../../middlewares/apiError.middleware.js"
 import {signToken} from "../../utils/auth.utils.js"
 import client from "../../config/google-auth.config.js"

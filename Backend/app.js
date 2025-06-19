@@ -61,9 +61,14 @@ app.use(router);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-
-
-app.listen(process.env.PORT, () => {
-    connectDB();
-    console.log(`Server is running on port ${process.env.PORT}`);
+connectDB();
+app.get("/test", (req, res) => {
+    res.send("Welcome to the TinyURLz Backend!");
 });
+
+// app.listen(process.env.PORT, () => {
+//     connectDB();
+//     console.log(`Server is running on port ${process.env.PORT}`);
+// });
+
+module.exports = app;

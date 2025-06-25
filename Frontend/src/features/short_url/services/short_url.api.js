@@ -7,6 +7,7 @@ export const createShortUrl = async (url, slug, password, expiresIn) => {
     password,
     expiresIn,
   }
+  console.log(payload);
   const { data } = await axiosInstance.post("/api/urls/", payload)
   return data.shortUrl
 }

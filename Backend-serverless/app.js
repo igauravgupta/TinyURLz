@@ -47,6 +47,7 @@
   // CORS Configuration
   app.use(cors(corsOptions));
 
+
   // Set security HTTP headers
   app.use(helmet());
 

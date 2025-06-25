@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { PassThrough } from "winston-daily-rotate-file";
+
 
 const shortUrlSchema = new mongoose.Schema({
   full_url: {

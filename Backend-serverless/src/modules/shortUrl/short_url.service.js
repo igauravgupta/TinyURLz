@@ -1,7 +1,7 @@
 import { generateNanoId } from "../../utils/auth.utils.js";
 import { getCustomShortUrl, saveShortUrl } from "./short_url.dao.js";
 
-export const createShortUrlWithUser = async (url, userId, expiresInMs = null, password = null, slug = null) => {
+export const createShortUrlWithUser = async (url, userId, expiresInMs = null, slug = null, password = null) => {
     const shortUrl = slug || generateNanoId(7);
 
     const exists = await getCustomShortUrl(shortUrl);

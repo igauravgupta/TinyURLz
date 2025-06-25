@@ -1,10 +1,10 @@
-import shortUrl from "../../models/short_url.model.js"; // make sure this is the model, not schema
+import urlSchema from "../../models/short_url.model.js"; // make sure this is the model, not schema
 import { ConflictError } from "../../middlewares/apiError.middleware.js";
 import bcrypt from "bcryptjs";
 
 export const saveShortUrl = async (shortUrlCode, longUrl, userId, password = null, expireAt = null) => {
   try {
-    const newUrl = new shortUrl({
+    const newUrl = new urlSchema({
       full_url: longUrl,
       short_url: shortUrlCode,
       user: userId,

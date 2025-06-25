@@ -1,30 +1,36 @@
-import { getShortUrl, deleteShortUrlById } from "./short_url.dao.js"
-import { createShortUrlWithoutUser, createShortUrlWithUser } from "./short_url.service.js"
+import { getShortUrl, deleteShortUrlById, getCustomShortUrl , comparePassword} from "./short_url.dao.js"
+import {createShortUrlWithUser} from "./short_url.service.js"
 import {asyncHandler} from "../../utils/asyncHandler.utils.js"
 
+
 export const createShortUrl = asyncHandler(async (req,res)=>{
-    const data = req.body
+    const data = req.body;
     let shortUrl
     if(req.user){
-        console.log("User ID",req.user._id)
-        shortUrl = await createShortUrlWithUser(data.url,req.user._id,data.slug)
-    }else{  
-        shortUrl = await createShortUrlWithoutUser(data.url)
+        shortUrl = await createShortUrlWithUser(data.url,req.user._id,data.expiresAt,data.slug,data.password);
     }
     res.status(200).json({shortUrl : shortUrl})
 })
 
+export const redirectFromShortUrl = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const url = await getShortUrl(id);
 
-export const redirectFromShortUrl = asyncHandler(async (req,res)=>{
-    const {id} = req.params
-    const url = await getShortUrl(id)
-    if(!url) throw new Error("Short URL not found")
-    res.redirect(url.full_url)
-})
+  if (!url) {
+    return res.status(404).send("Short URL not found");
+  }
+  if (url.expireAt && url.expireAt < new Date()) {
+    return res.status(410).send("This link has expired");
+  }
+  if (url.password) {
+    return res.render("password",{id});
+  }
+  return res.redirect(url.full_url);
+});
 
 export const createCustomShortUrl = asyncHandler(async (req,res)=>{
     const {url,slug} = req.body
-    const shortUrl = await createShortUrlWithoutUser(url,customUrl)
+    const shortUrl = await createShortUrlWithoutUser(url,slug)
     console.log("Short URL",shortUrl)
     res.status(200).json({shortUrl : shortUrl})
 })
@@ -35,3 +41,19 @@ export const deleteShortUrl = asyncHandler(async (req,res)=>{
     if(!url) throw new Error("Short URL not found")
     res.status(200).json({message:"URL deleted successfully"})
 });
+
+export const verifyPassword = asyncHandler(async(req,res)=>{
+    const {password}=req.body;
+    const {id}=req.params;
+    const url = await getShortUrl(id);
+    const matchPassword= await comparePassword(password);
+    if(matchPassword){
+        res.redirect(url.full_url);
+    }else{
+        return res.render('password_prompt', {
+      slug: id,
+      error: 'Incorrect password. Please try again.',
+        });
+    }
+});
+

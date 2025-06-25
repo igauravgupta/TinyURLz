@@ -1,19 +1,18 @@
-import { generateNanoId } from "../../utils/auth.utils.js"
-import urlSchema from "../../models/short_url.model.js"
-import { getCustomShortUrl, saveShortUrl } from "./short_url.dao.js"
+import { generateNanoId } from "../../utils/auth.utils.js";
+import { getCustomShortUrl, saveShortUrl } from "./short_url.dao.js";
 
-export const createShortUrlWithoutUser = async (url) => {
-    const shortUrl = generateNanoId(7)
-    if(!shortUrl) throw new Error("Short URL not generated")
-    await saveShortUrl(shortUrl,url)
-    return shortUrl
-}
+export const createShortUrlWithUser = async (url, userId, expiresInMs = null, password = null, slug = null) => {
+    const shortUrl = slug || generateNanoId(7);
 
-export const createShortUrlWithUser = async (url,userId,slug=null) => {
-    const shortUrl = slug || generateNanoId(7)
-    const exists = await getCustomShortUrl(slug)
-    if(exists) throw new Error("This custom url already exists")
+    const exists = await getCustomShortUrl(shortUrl);
+    if (exists) throw new Error("This custom URL already exists");
 
-    await saveShortUrl(shortUrl,url,userId)
-    return shortUrl
-}
+    let expireAt = null;
+    if (expiresInMs) {
+        expireAt = new Date(Date.now() + expiresInMs);
+    }
+
+    await saveShortUrl(shortUrl, url, userId, password, expireAt);
+
+    return shortUrl;
+};

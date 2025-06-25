@@ -18,12 +18,6 @@
   const app = express();
   dotenv.config();
 
-
-
-  // // Body Parser Middleware
-  // app.use(express.json({limit: "10kb" }));
-  // app.use(express.urlencoded({ extended: true, limit: "10kb"  }));
-
   app.use((req, res, next) => {
     let data = [];
     req.on("data", chunk => data.push(chunk));
@@ -42,6 +36,12 @@
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   app.use(express.static(path.join(__dirname, "public")));
+
+  // Configure EJS (View Engine)
+  app.set("view engine", "ejs");
+  app.set("views", path.join(__dirname, "views"));
+
+
   app.use(cookieParser());
 
   // CORS Configuration

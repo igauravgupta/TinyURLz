@@ -7,7 +7,7 @@ export const createShortUrl = asyncHandler(async (req,res)=>{
     const data = req.body;
     let shortUrl
     if(req.user){
-        shortUrl = await createShortUrlWithUser(data.url,req.user._id,data.expiresAt,data.slug,data.password);
+        shortUrl = await createShortUrlWithUser(data,req.user._id);
     }
     res.status(200).json({shortUrl : shortUrl})
 })
@@ -28,13 +28,6 @@ export const redirectFromShortUrl = asyncHandler(async (req, res) => {
   return res.redirect(url.full_url);
 });
 
-export const createCustomShortUrl = asyncHandler(async (req,res)=>{
-    const {url,slug} = req.body
-    const shortUrl = await createShortUrlWithoutUser(url,slug)
-    console.log("Short URL",shortUrl)
-    res.status(200).json({shortUrl : shortUrl})
-})
-
 export const deleteShortUrl = asyncHandler(async (req,res)=>{
     const {id} = req.params
     const url = await deleteShortUrlById(id)
@@ -43,10 +36,10 @@ export const deleteShortUrl = asyncHandler(async (req,res)=>{
 });
 
 export const verifyPassword = asyncHandler(async(req,res)=>{
-    const {password}=req.body;
+    const {password}=req.query;
     const {id}=req.params;
     const url = await getShortUrl(id);
-    const matchPassword= await comparePassword(password);
+    const matchPassword= await comparePassword(password,url);
     if(matchPassword){
         res.redirect(url.full_url);
     }else{

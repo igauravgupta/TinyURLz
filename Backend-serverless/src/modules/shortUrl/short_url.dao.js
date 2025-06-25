@@ -2,20 +2,19 @@ import urlSchema from "../../models/short_url.model.js"; // make sure this is th
 import { ConflictError } from "../../middlewares/apiError.middleware.js";
 import bcrypt from "bcryptjs";
 
-export const saveShortUrl = async (shortUrlCode, longUrl, userId, password = null, expireAt = null) => {
+export const saveShortUrl = async (shortUrlCode, longUrl, userId, password, expireAt) => {
   try {
+    let hashedPassword
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
     const newUrl = new urlSchema({
       full_url: longUrl,
       short_url: shortUrlCode,
       user: userId,
-      expireAt: expireAt
+      expireAt: expireAt,
+      password:hashedPassword,
     });
-
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      newUrl.password = hashedPassword;
-    }
-
     await newUrl.save();
   } catch (err) {
     if (err.code === 11000) {
@@ -38,6 +37,6 @@ export const deleteShortUrlById = async (id) => {
     return await urlSchema.findByIdAndDelete(id);
 }
 
-export const comparePassword=async(password)=>{
-    return await bcrypt.compare(password,url.password);
-}
+export const comparePassword = async (password, url) => {
+  return await bcrypt.compare(password, url.password);
+};

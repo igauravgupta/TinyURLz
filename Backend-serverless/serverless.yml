@@ -42,6 +42,5 @@ package:
   exclude:
     - .gitignore
     - README.md
-    - .env
   include:
     - node_modules/**

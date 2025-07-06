@@ -1,6 +1,6 @@
-import urlSchema from "../../models/short_url.model.js"; // make sure this is the model, not schema
+import urlSchema from "../../models/short_url.model.js"; 
 import { ConflictError } from "../../middlewares/apiError.middleware.js";
-import bcrypt from "bcryptjs";
+
 
 export const saveShortUrl = async (shortUrlCode, longUrl, userId, expireAt) => {
   try {
@@ -32,6 +32,3 @@ export const deleteShortUrlById = async (id) => {
     return await urlSchema.findByIdAndDelete(id);
 }
 
-export const comparePassword = async (password, url) => {
-  return await bcrypt.compare(password, url.password);
-};

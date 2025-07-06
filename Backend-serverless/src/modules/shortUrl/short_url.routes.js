@@ -5,6 +5,5 @@ const router = express.Router();
 
 router.post("/",authMiddleware,createShortUrl);
 router.delete("/delete/:id",authMiddleware,deleteShortUrl);
-router.get("/verifyPassword/:id",verifyPassword);
 
 export default router;

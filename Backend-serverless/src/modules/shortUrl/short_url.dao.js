@@ -2,18 +2,13 @@ import urlSchema from "../../models/short_url.model.js"; // make sure this is th
 import { ConflictError } from "../../middlewares/apiError.middleware.js";
 import bcrypt from "bcryptjs";
 
-export const saveShortUrl = async (shortUrlCode, longUrl, userId, password, expireAt) => {
+export const saveShortUrl = async (shortUrlCode, longUrl, userId, expireAt) => {
   try {
-    let hashedPassword
-    if (password) {
-      hashedPassword = await bcrypt.hash(password, 10);
-    }
     const newUrl = new urlSchema({
       full_url: longUrl,
       short_url: shortUrlCode,
       user: userId,
       expireAt: expireAt,
-      password:hashedPassword,
     });
     await newUrl.save();
   } catch (err) {

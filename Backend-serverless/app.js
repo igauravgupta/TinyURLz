@@ -6,8 +6,6 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import hpp from "hpp";
 import mongoSanitize from "express-mongo-sanitize";
-import path from "path";
-import { fileURLToPath } from "url";
 import xss from "xss-clean";
 import { corsOptions } from "./src/config/corsOptions.config.js";
 import { errorHandler } from "./src/utils/errorHandler.utils.js";
@@ -35,15 +33,6 @@ app.use(hpp());
 
 // Data sanitization against XSS
 // app.use(xss()); 
-
-// Static files
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "public")));
-
-// Configure EJS
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
 
 app.use((req, res, next) => {
     let data = [];
@@ -81,5 +70,6 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 export { app };
+
 
 

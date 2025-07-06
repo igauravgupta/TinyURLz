@@ -24,9 +24,6 @@ const shortUrlSchema = new mongoose.Schema({
   expireAt:{
     type:Date
   },
-  password:{
-    type:String,
-  }
 });
 
 const shortUrl = mongoose.model("shortUrl", shortUrlSchema);

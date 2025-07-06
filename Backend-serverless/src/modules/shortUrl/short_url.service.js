@@ -9,6 +9,6 @@ export const createShortUrlWithUser = async (data,userId) => {
     if (data.expiresIn) {
         expireAt = new Date(Date.now() + data.expiresIn);
     }
-    await saveShortUrl(shortUrl, data.url, userId, data.password, expireAt);
+    await saveShortUrl(shortUrl, data.url, userId, expireAt);
     return shortUrl;
 };

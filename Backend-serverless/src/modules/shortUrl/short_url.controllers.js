@@ -1,4 +1,4 @@
-import { getShortUrl, deleteShortUrlById, getCustomShortUrl , comparePassword} from "./short_url.dao.js"
+import { getShortUrl, deleteShortUrlById} from "./short_url.dao.js"
 import {createShortUrlWithUser} from "./short_url.service.js"
 import {asyncHandler} from "../../utils/asyncHandler.utils.js"
 

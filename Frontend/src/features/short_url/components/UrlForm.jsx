@@ -10,7 +10,6 @@ const UrlForm = () => {
   const [copied, setCopied] = useState(false)
   const [error, setError] = useState(null)
   const [customSlug, setCustomSlug] = useState("")
-  const [password, setPassword] = useState("")
   const [expiresIn, setExpiresIn] = useState("") // in hours
   const { isAuthenticated } = useSelector((state) => state.auth)
 
@@ -18,7 +17,7 @@ const UrlForm = () => {
     try {
       const expiresInMs = expiresIn ? parseInt(expiresIn) * 60 * 60 * 1000 : null // convert hours to ms
 
-      const shortUrlSlug = await createShortUrl(url, customSlug, password, expiresInMs)
+      const shortUrlSlug = await createShortUrl(url, customSlug, expiresInMs)
       setShortUrl(`${API_URL}${shortUrlSlug}`)
       queryClient.invalidateQueries({ queryKey: ['userUrls'] })
       setError(null)
@@ -62,20 +61,6 @@ const UrlForm = () => {
               value={customSlug}
               onChange={(event) => setCustomSlug(event.target.value)}
               placeholder="Enter custom slug"
-              className="w-full px-4 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
-              Password Protection (optional)
-            </label>
-            <input
-              type="text"
-              id="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="Set a password to protect the URL"
               className="w-full px-4 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>

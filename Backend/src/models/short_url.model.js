@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const shortUrlSchema = new mongoose.Schema({
 
+const shortUrlSchema = new mongoose.Schema({
   full_url: {
     type: String,
     required: true,
@@ -20,7 +20,10 @@ const shortUrlSchema = new mongoose.Schema({
   user:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-  }
+  },
+  expireAt:{
+    type:Date
+  },
 });
 
 const shortUrl = mongoose.model("shortUrl", shortUrlSchema);

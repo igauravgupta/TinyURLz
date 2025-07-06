@@ -1,22 +1,21 @@
 import urlSchema from "../../models/short_url.model.js";
 import { ConflictError } from "../../middlewares/apiError.middleware.js";
 
-export const saveShortUrl = async (shortUrl, longUrl, userId) => {
-    try{
-        const newUrl = new urlSchema({
-            full_url:longUrl,
-            short_url:shortUrl
-        })
-        if(userId){
-            newUrl.user = userId
-        }
-        await newUrl.save()
-    }catch(err){
-        if(err.code == 11000){
-            throw new ConflictError("Short URL already exists")
-        }
-        throw new Error(err)
+export const saveShortUrl = async (shortUrlCode, longUrl, userId, expireAt) => {
+  try {
+    const newUrl = new urlSchema({
+      full_url: longUrl,
+      short_url: shortUrlCode,
+      user: userId,
+      expireAt: expireAt,
+    });
+    await newUrl.save();
+  } catch (err) {
+    if (err.code === 11000) {
+      throw new ConflictError("Short URL already exists");
     }
+    throw new Error(err.message || err);
+  }
 };
 
 export const getShortUrl = async (shortUrl) => {
